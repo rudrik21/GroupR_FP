@@ -113,8 +113,30 @@ public class AddEmployeeActivity extends AppCompatActivity implements View.OnCli
     }
 
     @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        switch (parent.getId()) {
+            case R.id.spinnerEmpType:
+                if (position == 0) {
+                    viewEmpTypeVal.setVisibility(View.GONE);
+                    viewEmpTravelDays.setVisibility(View.GONE);
+                } else {
+                    viewEmpTypeVal.setVisibility(View.VISIBLE);
 
+                    switch (parent.getSelectedItemPosition()) {
+                        case 1:
+                            viewEmpTypeVal.setHint("#Projects");
+                            break;
+                        case 2:
+                            viewEmpTypeVal.setHint("#Clients");
+                            viewEmpTravelDays.setVisibility(View.VISIBLE);
+                            break;
+                        case 3:
+                            viewEmpTypeVal.setHint("#Bugs");
+                            break;
+                    }
+                }
+                break;
+        }
     }
 
     @Override
