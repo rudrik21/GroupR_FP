@@ -60,6 +60,8 @@ public class AddEmployeeActivity extends AppCompatActivity implements View.OnCli
     private AppCompatSpinner spinnerVcolor;
     private FloatingActionButton btnAddEmployee;
 
+    private Employee emp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,8 +110,117 @@ public class AddEmployeeActivity extends AppCompatActivity implements View.OnCli
     }
 
     @Override
-    public void onClick(View view) {
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnAddEmployee:
 
+                if (checkValidEntries(getEditTexts()) && spinnerEmpType.getSelectedItemPosition() > 0 && spinnerVcolor.getSelectedItemPosition() > 0) {
+                    Vehicle vehicle;
+                    if (rbtCar.isChecked()) {
+                        vehicle = new Car(
+                                edtVmodel.getText().toString(),
+                                edtPlateNumber.getText().toString(),
+                                ((TextView) spinnerVcolor.getSelectedView()).getText().toString(),
+                                edtCarType.getText().toString());
+                    } else {
+                        vehicle = new Motorcycle(
+                                edtVmodel.getText().toString(),
+                                edtPlateNumber.getText().toString(),
+                                ((TextView) spinnerVcolor.getSelectedView()).getText().toString(),
+                                switchSidecar.isChecked());
+                    }
+
+                    int bYear = (edtByear.getText().toString().isEmpty() ? 0 : Integer.parseInt(edtByear.getText().toString()));
+                    int numbers = (edtEmpTypeVal.getText().toString().isEmpty() ? 0 : Integer.parseInt(edtEmpTypeVal.getText().toString()));
+                    int tDays = (edtEmpTravelDays.getText().toString().isEmpty() ? 0 : Integer.parseInt(edtEmpTravelDays.getText().toString()));
+                    int oRate = (edtOrate.getText().toString().isEmpty() ? 0 : Integer.parseInt(edtOrate.getText().toString()));
+                    double salary = (edtMsalary.getText().toString().isEmpty() ? 0 : Double.parseDouble(edtMsalary.getText().toString()));
+
+                    switch (((TextView) spinnerEmpType.getSelectedView()).getText().toString()) {
+
+                        case "Programmer":
+
+                            emp = new Programmer(
+                                    edtFname.getText().toString().concat(" ").concat(edtLname.getText().toString()),
+                                    (rbtMale.isChecked() ? 'M' : 'F'),
+                                    bYear,
+                                    salary,
+                                    oRate,
+                                    vehicle,
+                                    numbers);
+                            break;
+
+                        case "Manager":
+                            emp = new Manager(
+                                    edtFname.getText().toString().concat(" ").concat(edtLname.getText().toString()),
+                                    (rbtMale.isChecked() ? 'M' : 'F'),
+                                    bYear,
+                                    salary,
+                                    oRate,
+                                    vehicle,
+                                    numbers,
+                                    tDays);
+                            break;
+
+                        case "Tester":
+                            emp = new Tester(
+                                    edtFname.getText().toString().concat(" ").concat(edtLname.getText().toString()),
+                                    (rbtMale.isChecked() ? 'M' : 'F'),
+                                    Integer.parseInt(edtByear.getText().toString()),
+                                    salary,
+                                    oRate,
+                                    vehicle,
+                                    numbers);
+                            break;
+                    }
+                    Employee.listEmployees.add(emp);
+                    finish();
+                    Log.e("Employee", emp.toString());
+                } else if (spinnerEmpType.getSelectedItemPosition() == 0) {
+                    Toast.makeText(this, "Please, select employee type!", Toast.LENGTH_SHORT).show();
+                } else if (spinnerVcolor.getSelectedItemPosition() == 0) {
+                    Toast.makeText(this, "Please, select vehicle color!", Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
+    }
+
+    private ArrayList<TextInputEditText> getEditTexts() {
+        return new ArrayList<TextInputEditText>() {{
+            add(edtFname);
+            add(edtLname);
+            add(edtOrate);
+
+            if (rbtCar.isChecked()) {
+                add(edtCarType);
+            }
+
+
+            add(edtByear);
+            add(edtEmpID);
+            add(edtEmpTravelDays);
+
+            if (spinnerEmpType.getSelectedItemPosition() > 0) {
+                add(edtEmpTypeVal);
+            }
+
+            add(edtMsalary);
+            add(edtPlateNumber);
+            add(edtVmodel);
+        }};
+    }
+
+    private boolean checkValidEntries(ArrayList<TextInputEditText> list) {
+        for (TextInputEditText edt : list) {
+            if (edt != null && edt.getText().toString().trim().equals("") && edt.getVisibility() == View.VISIBLE) {
+                if (spinnerEmpType.getSelectedItemPosition() != 1 && edt != edtEmpTravelDays) {
+                    edt.setError("Please insert correct " + edt.getHint().toString() + "!");
+                    Toast.makeText(this, "invalid " + edt.getHint().toString() + "!", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     @Override

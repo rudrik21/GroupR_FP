@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">GroupR_FP</string>
+
+    <array name="emp_type">
+        <item>Choose a type</item>
+        <item>Programmer</item>
+        <item>Manager</item>
+        <item>Tester</item>
+    </array>
+
+    <array name="v_colors">
+        <item>Choose a color</item>
+        <item>White</item>
+        <item>Red</item>
+        <item>Yellow</item>
+        <item>Black</item>
+        <item>Orange</item>
+        <item>Gray</item>
+        <item>Cyne</item>
+        <item>Blue</item>
+        <item>Maroon</item>
+    </array>
 </resources>
