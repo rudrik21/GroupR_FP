@@ -123,7 +123,27 @@ public class AddEmployeeActivity extends AppCompatActivity implements View.OnCli
     }
 
     @Override
-    public void onCheckedChanged(RadioGroup radioGroup, int i) {
+    public void onCheckedChanged(RadioGroup group, int i) {
+        switch (group.getCheckedRadioButtonId()) {
 
+            case R.id.rbtMale:
+                imgAvatar.setImageDrawable(getDrawable(R.drawable.ic_user_man));
+                break;
+
+            case R.id.rbtFemale:
+                imgAvatar.setImageDrawable(getDrawable(R.drawable.ic_user_woman));
+                break;
+
+            case R.id.rbtCar:
+                viewCar.setVisibility(View.VISIBLE);
+                viewBike.setVisibility(View.GONE);
+                break;
+
+            case R.id.rbtMotorbike:
+                viewCar.setVisibility(View.GONE);
+                viewBike.setVisibility(View.VISIBLE);
+                break;
+
+        }
     }
 }
