@@ -29,7 +29,7 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 
-public class AddEmployeeActivity extends AppCompatActivity {
+public class AddEmployeeActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener, RadioGroup.OnCheckedChangeListener {
 
 
     private static String TAG = "AddEmployeeActivity: ";
@@ -98,6 +98,32 @@ public class AddEmployeeActivity extends AppCompatActivity {
         btnAddEmployee = (FloatingActionButton) findViewById(R.id.btnAddEmployee);
 
         edtEmpID.setText(String.valueOf(Employee.listEmployees.size() + 1));
+
+        spinnerEmpType.setOnItemSelectedListener(this);
+        spinnerVcolor.setOnItemSelectedListener(this);
+
+        rgpGender.setOnCheckedChangeListener(this);
+        rgpVehicle.setOnCheckedChangeListener(this);
+        btnAddEmployee.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup radioGroup, int i) {
 
     }
 }
